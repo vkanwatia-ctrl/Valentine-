@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Will You Be My Valentine, Oashe?</title>
+
+<style>
+    body {
+        font-family: 'Comic Sans MS', sans-serif;
+        background: linear-gradient(135deg, #ffe6f2, #ffd1e8);
+        text-align: center;
+        padding-top: 60px;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        font-size: 3rem;
+        color: #ff2f7d;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-12px); }
+        100% { transform: translateY(0); }
+    }
+
+    .photo-frame {
+        margin: 20px auto;
+        width: 260px;
+        height: 260px;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 5px solid #ff4d88;
+        box-shadow: 0 0 20px rgba(255, 0, 100, 0.4);
+        animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+        from { box-shadow: 0 0 15px #ff4d88; }
+        to { box-shadow: 0 0 30px #ff1a66; }
+    }
+
+    .btn {
+        font-size: 1.5rem;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        margin: 20px;
+        transition: 0.3s;
+        position: relative;
+    }
+
+    #yesBtn {
+        background-color: #ff4d88;
+        color: white;
+        position: absolute;
+    }
+
+    #noBtn {
+        background-color: #666;
+        color: white;
+    }
+
+    #celebration {
+        display: none;
+        font-size: 2.5rem;
+        color: #ff0066;
+        margin-top: 40px;
+        animation: pop 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pop {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: red;
+        animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+        from { transform: translateY(-100vh) rotate(0deg); }
+        to { transform: translateY(100vh) rotate(360deg); }
+    }
+
+    #secretMessage {
+        display: none;
+        margin-top: 30px;
+        font-size: 1.8rem;
+        color: #d1005c;
+        animation: fadeIn 1.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    #countdown {
+        margin-top: 20px;
+        font-size: 1.4rem;
+        color: #ff1a75;
+        font-weight: bold;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>💖 Hey Oashe... Will You Be My Valentine? 💖</h1>
+
+<!-- Add your couple photo here -->
+<div class="photo-frame">
+    <img src="your-photo.jpg" width="260" height="260">
+</div>
+
+<div id="countdown"></div>
+
+<button id="yesBtn" class="btn">❤️ YES ❤️</button>
+<button id="noBtn" class="btn">💔 NO 💔</button>
+
+<div id="celebration">🎉 YAYYYY! I knew you'd say YES, Oashe! ❤️💖  
+<br>Get ready for the cutest Valentine ever 😘</div>
+
+<div id="secretMessage">💌 P.S. I love you more than you know 💌</div>
+
+<script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const celebration = document.getElementById("celebration");
+    const secretMessage = document.getElementById("secretMessage");
+
+    // YES button runs away
+    yesBtn.addEventListener("mouseover", () => {
+        yesBtn.style.left = Math.random() * (window.innerWidth - 200) + "px";
+        yesBtn.style.top = Math.random() * (window.innerHeight - 200) + "px";
+    });
+
+    // YES button celebration
+    yesBtn.addEventListener("click", () => {
+        celebration.style.display = "block";
+        secretMessage.style.display = "block";
+
+        for (let i = 0; i < 150; i++) {
+            let confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * window.innerWidth + "px";
+            confetti.style.backgroundColor =
+                ["#ff4d88", "#ff99cc", "#ff1a75", "#ff66b3"][Math.floor(Math.random()*4)];
+            confetti.style.animationDuration = (2 + Math.random() * 3) + "s";
+            document.body.appendChild(confetti);
+
+            setTimeout(() => confetti.remove(), 5000);
+        }
+    });
+
+    // NO button shrinks each time
+    let noSize = 1;
+    noBtn.addEventListener("click", () => {
+        noSize -= 0.1;
+        noBtn.style.transform = `scale(${noSize})`;
+
+        const funnyLines = [
+            "Oashe… really? Try again 😌",
+            "That button is getting smaller, unlike my love for you.",
+            "Wrong answer detected. Please choose YES.",
+            "Hmm… interesting choice. Wanna rethink that?",
+            "Are you sure? Like… REALLY sure 👀",
+            "The YES button is waiting for you."
+        ];
+
+        alert(funnyLines[Math.floor(Math.random() * funnyLines.length)]);
+    });
+
+    // Countdown to Valentine's Day
+    function updateCountdown() {
+        const now = new Date();
+        const valentines = new Date(now.getFullYear(), 1, 14);
+        const diff = valentines - now;
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        const secs = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").innerHTML =
+            `❤️ Countdown to Valentine’s Day: ${days}d ${hours}h ${mins}m ${secs}s ❤️`;
+    }
+
+    setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
